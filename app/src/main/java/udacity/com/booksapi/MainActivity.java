@@ -6,7 +6,11 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Book> {
 
-private static final String LOG_TAG=  MainActivity.class.getName() ;
+private static final String LOG_TAG=  MainActivity.class.getName();
+
+    private static final String GOOGLE_API_URL= "https://www.googleapis.com/books/v1/volumes?q=";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
