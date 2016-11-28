@@ -15,6 +15,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+import static android.R.attr.author;
+import static udacity.com.booksapi.R.drawable.book;
+import static udacity.com.booksapi.R.id.authors;
+
 public class QueryUtils {
 
     public static final String LOG_TAG = QueryUtils.class.getSimpleName();
@@ -113,8 +117,31 @@ public class QueryUtils {
     private static Book extractFeatureFromJson(String bookJson) {
         if (TextUtils.isEmpty(bookJson)){return null; }
 try {
-    JSONObject baseJsonResponse = new JSONObject (bookJson);
-    JSONArray featureArray= baseJsonResponse.getJSONArray("");
+    JSONObject object = new JSONObject (bookJson);
+    JSONArray array= object.getJSONArray("items");
+
+    if (array.length()>0){
+        JSONObject item = array.getJSONObject(0);
+
+        JSONObject volumeInfo = item.getJSONObject("volumeinfo");
+        String title = volumeInfo.getString("title");
+
+        JSONArray authors = volumeInfo.getJSONArray("authors");
+        String author =  authors.getString(0);
+
+        String description =
+
+        if (volumeInfo.getJSONObject.has("imageLinks")){
+        JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
+        String imageLink = imageLinks.getString("smallThumbnail");}else
+        {}
+
+
+
+
+
+    }
+
 
 
 } catch (JSONException e) {
