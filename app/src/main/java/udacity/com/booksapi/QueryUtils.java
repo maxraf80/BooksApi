@@ -1,23 +1,17 @@
 package udacity.com.booksapi;
-
 import android.text.TextUtils;
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-
-import static android.R.attr.author;
-import static udacity.com.booksapi.R.drawable.book;
-import static udacity.com.booksapi.R.id.authors;
 
 public class QueryUtils {
 
@@ -28,9 +22,23 @@ public class QueryUtils {
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error closing input stream", e);
         }
-
+        Book book = extractFeatureFromJson(jsonResponse);
+        return book;
     }
+
+    private static URL createURL(String stringURL) {
+        URL url = null;
+        try {
+            url = new URL(stringURL);
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "Error creating URL", e);
+        }
+        return url;
+    }
+
 
     private static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
@@ -83,68 +91,37 @@ public class QueryUtils {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private static Book extractFeatureFromJson(String bookJson) {
-        if (TextUtils.isEmpty(bookJson)){return null; }
-try {
-    JSONObject object = new JSONObject (bookJson);
-    JSONArray array= object.getJSONArray("items");
+        if (TextUtils.isEmpty(bookJson)) {
+            return null;
+        }
+        try {
+            JSONObject object = new JSONObject(bookJson);
+            JSONArray array = object.getJSONArray("items");
 
-    if (array.length()>0){
-        JSONObject item = array.getJSONObject(0);
+            if (array.length() > 0) {
+                JSONObject item = array.getJSONObject(0);
 
-        JSONObject volumeInfo = item.getJSONObject("volumeinfo");
-        String title = volumeInfo.getString("title");
+                JSONObject volumeInfo = item.getJSONObject("volumeinfo");
+                String title = volumeInfo.getString("title");
 
-        JSONArray authors = volumeInfo.getJSONArray("authors");
-        String author =  authors.getString(0);
+                JSONArray authors = volumeInfo.getJSONArray("authors");
+                String author = authors.getString(0);
 
-        String description =
+                String publisher = item.getString("publisher");
 
-        if (volumeInfo.getJSONObject.has("imageLinks")){
-        JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
-        String imageLink = imageLinks.getString("smallThumbnail");}else
-        {}
+                String description = item.getString("description");
+
+                JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
+                String imageLink = imageLinks.getString("smallThumbnail");
+
+                return new Book(title, author, publisher, description, imageLink);
+            }
 
 
-
-
-
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
+        }
+        return null;
     }
-
-
-
-} catch (JSONException e) {
-    Log.e(LOG_TAG, "Problem parsing the earthquake JSON results" , e);
 }
-return null; }}

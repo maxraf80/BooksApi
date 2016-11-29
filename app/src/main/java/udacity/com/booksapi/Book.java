@@ -6,10 +6,10 @@ private String title;
 private String authors;
 private String publisher;
 private String description;
-private int    thumbnail;
+private String    thumbnail;
 
 
-public Book (String mTitle,String mAuthors,String mPublisher, String mDescription, int mThumnail){
+public Book (String mTitle,String mAuthors,String mPublisher, String mDescription, String mThumnail){
 
     title=mTitle;
     authors=mAuthors;
@@ -22,5 +22,5 @@ public String getTitle(){return title;}
 public String getAuthors(){return authors;}
 public String getPublisher(){return publisher;}
 public String getDescription(){return description;}
-public int    getThumbnail(){return thumbnail;}
+public String    getThumbnail(){return thumbnail;}
 }

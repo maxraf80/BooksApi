@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class BookAdapter extends ArrayAdapter<Book> {
+
     public BookAdapter(Context context, ArrayList<Book> books) {
         super(context, 0, books);
     }
@@ -22,14 +23,14 @@ public class BookAdapter extends ArrayAdapter<Book> {
 
         View listItemView = convertView;
         if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.activity_main, parent, false);
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.book_list, parent, false);
         }
 
         Book book = getItem(position);
 
 
         ImageView imageView =(ImageView)listItemView.findViewById(R.id.thumbnail);
-        imageView.setImageResource(book.getThumbnail());
+        ImageLoader imageLoader=new ImageLoader (context);
 
         TextView titleTextView=(TextView)listItemView.findViewById(R.id.Title);
         titleTextView.setText(book.getTitle());
