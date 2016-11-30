@@ -20,6 +20,8 @@ public class BookAdapter extends ArrayAdapter<Book> {
     }
 
 
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
