@@ -7,50 +7,65 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity  {
+import java.util.ArrayList;
 
-private String api= "https://www.googleapis.com/books/v1/volumes?q=";
-TextView topic;
-Button checkButton;
-String find;
-String newText;
+public class MainActivity extends AppCompatActivity {
 
+    private String api = "https://www.googleapis.com/books/v1/volumes?q=";
+    TextView topic;
+    Button checkButton;
+    String find;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         topic = (TextView) findViewById(R.id.editText);
 
-checkButton= (Button) findViewById(R.id.search_button);
+        checkButton = (Button) findViewById(R.id.search_button);
 
         checkButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                find = topic.getText().toString();}});
+                find = topic.getText().toString();
 
-        if(find.length()>0)
-        {find = newText.replace(" ", "+");
-           api = api + newText;}
-        BookAsycTask task = new BookAsycTask();
+                if (find.length() > 0) {
+                    find = find.replace(" ", "+");
+                    api = api + find;
+                }
+                BookAsycTask task = new BookAsycTask();
+                task.execute(api.toString());
 
-        task.execute(api.toString()); }
-
-
-
-    private class BookAsycTask extends AsyncTask<String,Void,Book>{
-protected Book doInBackground(String... urls) {
-    if (urls.length<1|| urls[0]==null){return null;}
-
-    Book result = QueryUtils.fetchBookData(urls[0]);return result;}
+            }
+        });
 
 
-
-    protected void onPostExecute(Book result) {
-
-        if (result == null) {
-            return;
+    }
 
 
+    private class BookAsycTask extends AsyncTask<String, Void, ArrayList<Book>> {
+        protected ArrayList<Book> doInBackground(String... urls) {
+            if (urls.length < 1 || urls[0] == null) {
+                return null;
+            }
 
-        }}}}
+            ArrayList<Book> result = QueryUtils.fetchBookData(urls[0]);
+            return result;
+        }
+
+
+        protected void onPostExecute(ArrayList<Book> result) {
+
+            if (result == null) {
+
+
+
+
+                return;
+
+
+            }
+        }
+    }
+}

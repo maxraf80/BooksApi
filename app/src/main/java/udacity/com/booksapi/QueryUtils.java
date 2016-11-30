@@ -104,13 +104,13 @@ public class QueryUtils {
             if (array.length() > 0) {
                 for(int i =0;i<array.length();i++){
 
-                JSONObject item = array.getJSONObject(0);
+                JSONObject item = array.getJSONObject(i);
 
                 JSONObject volumeInfo = item.getJSONObject("volumeinfo");
                 String title = volumeInfo.getString("title");
 
                 JSONArray authors = volumeInfo.getJSONArray("authors");
-                String author = authors.getString(0);
+                String author = authors.getString(i);
 
                 String publisher = item.getString("publisher");
 
