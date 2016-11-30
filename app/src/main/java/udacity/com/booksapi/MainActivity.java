@@ -19,7 +19,7 @@ String newText;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.book_list);
+        setContentView(R.layout.activity_main);
         topic = (TextView) findViewById(R.id.editText);
 
 checkButton= (Button) findViewById(R.id.search_button);
@@ -44,7 +44,7 @@ protected Book doInBackground(String... urls) {
 
     Book result = QueryUtils.fetchBookData(urls[0]);return result;}
 
-        
+
 
     protected void onPostExecute(Book result) {
 

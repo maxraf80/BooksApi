@@ -12,12 +12,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 public class QueryUtils {
 
     public static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
-    public static Book fetchBookData(String requestUrl) {
+    public static ArrayList<Book> fetchBookData(String requestUrl) {
         URL url = createURL(requestUrl);
         String jsonResponse = null;
         try {
@@ -25,8 +26,8 @@ public class QueryUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
-        Book book = extractFeatureFromJson(jsonResponse);
-        return book;
+
+        return extractFeatureFromJson(jsonResponse);
     }
 
     private static URL createURL(String stringURL) {
@@ -91,15 +92,18 @@ public class QueryUtils {
     }
 
 
-    private static Book extractFeatureFromJson(String bookJson) {
+    private static ArrayList<Book> extractFeatureFromJson(String bookJson) {
         if (TextUtils.isEmpty(bookJson)) {
             return null;
         }
         try {
+            ArrayList<Book> arrayListBook=new ArrayList<>();
             JSONObject object = new JSONObject(bookJson);
             JSONArray array = object.getJSONArray("items");
 
             if (array.length() > 0) {
+                for(int i =0;i<array.length();i++){
+
                 JSONObject item = array.getJSONObject(0);
 
                 JSONObject volumeInfo = item.getJSONObject("volumeinfo");
@@ -115,7 +119,10 @@ public class QueryUtils {
                 JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
                 String imageLink = imageLinks.getString("smallThumbnail");
 
-                return new Book(title, author, publisher, description, imageLink);
+                arrayListBook.add(new Book (title, author, publisher, description, imageLink));
+            }
+
+            return arrayListBook;
             }
 
 
