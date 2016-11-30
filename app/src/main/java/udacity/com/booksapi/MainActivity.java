@@ -22,6 +22,7 @@ String newText;
         setContentView(R.layout.book_list);
         topic = (TextView) findViewById(R.id.editText);
 
+checkButton= (Button) findViewById(R.id.search_button);
 
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,12 +36,15 @@ String newText;
 
         task.execute(api.toString()); }
 
-private class BookAsycTask extends AsyncTask<String,Void,Book>{
+
+
+    private class BookAsycTask extends AsyncTask<String,Void,Book>{
 protected Book doInBackground(String... urls) {
     if (urls.length<1|| urls[0]==null){return null;}
 
     Book result = QueryUtils.fetchBookData(urls[0]);return result;}
 
+        
 
     protected void onPostExecute(Book result) {
 
