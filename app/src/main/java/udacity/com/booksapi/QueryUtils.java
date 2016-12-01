@@ -82,7 +82,7 @@ public class QueryUtils {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStram, Charset.forName("UTF-8"));
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String line = reader.readLine();
-            while (line != null) ;
+            while (line != null) 
             {
                 output.append(line);
                 line = reader.readLine();

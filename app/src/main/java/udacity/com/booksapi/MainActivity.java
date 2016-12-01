@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
             if (result == null) {
                 return;         }
-          ArrayList<>(result);
 
         }
     }
