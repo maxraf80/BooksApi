@@ -21,19 +21,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        ListView listView =(ListView)findViewById(R.id.list);
+        ListView listView = (ListView) findViewById(R.id.list);
+        BookAdapter adapter = new BookAdapter(this, new ArrayList<Book>());
         listView.setAdapter(adapter);
-
-
-
         topic = (TextView) findViewById(R.id.editText);
-
-
-
         checkButton = (Button) findViewById(R.id.search_button);
-
         checkButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -49,10 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
-
 
     private class BookAsycTask extends AsyncTask<String, Void, ArrayList<Book>> {
         protected ArrayList<Book> doInBackground(String... urls) {
@@ -68,11 +57,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Book> result) {
 
             if (result == null) {
-
-
-
-        BookAdapter adapter=new BookAdapter(this,);
-
 
 
                 return;
