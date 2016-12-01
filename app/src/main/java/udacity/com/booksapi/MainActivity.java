@@ -31,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 find = topic.getText().toString();
-
+                String toSearch = "";
                 if (find.length() > 0) {
                     find = find.replace(" ", "+");
-                    api = api + find;
+                    toSearch = api + find;
                 }
                 BookAsycTask task = new BookAsycTask();
-                task.execute(api.toString());
+                task.execute(toSearch);
 
             }
         });
@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Book> result) {
 
             if (result == null) {
-                return;         }
+                ;         }
+
+
 
         }
     }
