@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Book> result) {
 
             if (result == null) {
-                ;         }
+                    return null; }
 
 
 
