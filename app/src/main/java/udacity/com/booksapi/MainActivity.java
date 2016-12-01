@@ -3,12 +3,15 @@ package udacity.com.booksapi;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static udacity.com.booksapi.QueryUtils.LOG_TAG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,18 +52,25 @@ public class MainActivity extends AppCompatActivity {
 
         protected ArrayList<Book> doInBackground(String... urls) {
             if (urls.length < 1 || urls[0] == null) {
+                Log.e(LOG_TAG, "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
                 return null;
+
             }
 
             result = QueryUtils.fetchBookData(urls[0]);
+            Log.e(LOG_TAG, "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
             return result;
         }
 
 
         protected void onPostExecute(ArrayList<Book> result) {
 
-            if (result == null) {  return ; }
+            if (result == null) {
+                Log.e(LOG_TAG, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+
+                return ; }
             adapter.addAll(result);
+            Log.e(LOG_TAG, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
         }
     }
 }
