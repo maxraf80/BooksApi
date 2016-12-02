@@ -106,15 +106,25 @@ public class QueryUtils {
 
                 JSONObject item = array.getJSONObject(i);
 
-                JSONObject volumeInfo = item.getJSONObject("volumeinfo");
+                JSONObject volumeInfo = item.getJSONObject("volumeInfo");
                 String title = volumeInfo.getString("title");
 
                 JSONArray authors = volumeInfo.getJSONArray("authors");
-                String author = authors.getString(i);
+                String author = authors.getString(0);
 
-                String publisher = item.getString("publisher");
+                    String publisher = " ";
+                    if (volumeInfo.has("publisher")) {
+                        publisher = volumeInfo.getString("publisher");
+                    } else {
+                        publisher = "no publisher listed";
+                    }
 
-                String description = item.getString("description");
+                    String description ="";
+                    if(volumeInfo.has("description")){
+                        description = volumeInfo.getString("description");
+                    }else {
+                        description = "no book description provided";
+                    }
 
                 JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
                 String imageLink = imageLinks.getString("smallThumbnail");
