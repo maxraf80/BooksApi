@@ -20,8 +20,6 @@ public class BookAdapter extends ArrayAdapter<Book> {
     }
 
 
-
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -33,19 +31,19 @@ public class BookAdapter extends ArrayAdapter<Book> {
         Book book = getItem(position);
 
 
-        ImageView imageView =(ImageView)listItemView.findViewById(R.id.thumbnail);
+        ImageView imageView = (ImageView) listItemView.findViewById(R.id.thumbnail);
         Glide.with(getContext()).load(book.getThumbnail()).into(imageView);
 
-        TextView titleTextView=(TextView)listItemView.findViewById(R.id.Title);
+        TextView titleTextView = (TextView) listItemView.findViewById(R.id.Title);
         titleTextView.setText(book.getTitle());
 
         TextView autorTextView = (TextView) listItemView.findViewById((R.id.authors));
         autorTextView.setText(book.getAuthors());
 
-        TextView editorTextView =(TextView)listItemView.findViewById(R.id.publisher);
+        TextView editorTextView = (TextView) listItemView.findViewById(R.id.publisher);
         editorTextView.setText(book.getPublisher());
 
-        TextView descriptionTextView=(TextView)listItemView.findViewById(R.id.description);
+        TextView descriptionTextView = (TextView) listItemView.findViewById(R.id.description);
         descriptionTextView.setText(book.getDescription());
 
         return listItemView;

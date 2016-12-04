@@ -1,5 +1,8 @@
 package udacity.com.booksapi;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,13 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import static udacity.com.booksapi.QueryUtils.LOG_TAG;
 
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AppCompatActivity {
+    boolean conection;
     private String api = "https://www.googleapis.com/books/v1/volumes?q=";
     TextView topic;
     Button checkButton;
@@ -34,17 +39,30 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                find = topic.getText().toString();
-                String toSearch = "";
-                if (find.length() > 0) {
-                    find = find.replace(" ", "+");
-                    toSearch = api + find;
+                ConnectivityManager connMgr = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                if (networkInfo != null && networkInfo.isConnected()) {
+                    conection = true;
+                } else {
+                    conection = false;
                 }
-                BookAsycTask task = new BookAsycTask();
-                task.execute(toSearch);
-
+                if (conection == true) {
+                    find = topic.getText().toString();
+                    String toSearch = "";
+                    if (find.length() > 0) {
+                        find = find.replace(" ", "+");
+                        toSearch = api + find;
+                    }
+                    BookAsycTask task = new BookAsycTask();
+                    task.execute(toSearch);
+                } else {
+                    Toast.makeText(getApplicationContext(), "No internet connection found¡¡¡¡", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+
     }
 
     private class BookAsycTask extends AsyncTask<String, Void, ArrayList<Book>> {
@@ -68,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
             if (result == null) {
                 Log.e(LOG_TAG, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
-                return ; }
+                return;
+            }
             adapter.addAll(result);
             Log.e(LOG_TAG, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
         }

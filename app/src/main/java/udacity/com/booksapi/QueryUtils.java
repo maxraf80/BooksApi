@@ -1,9 +1,12 @@
 package udacity.com.booksapi;
+
 import android.text.TextUtils;
 import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -82,8 +85,7 @@ public class QueryUtils {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStram, Charset.forName("UTF-8"));
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String line = reader.readLine();
-            while (line != null)
-            {
+            while (line != null) {
                 output.append(line);
                 line = reader.readLine();
             }
@@ -97,20 +99,28 @@ public class QueryUtils {
             return null;
         }
         try {
-            ArrayList<Book> arrayListBook=new ArrayList<>();
+            ArrayList<Book> arrayListBook = new ArrayList<>();
             JSONObject object = new JSONObject(bookJson);
             JSONArray array = object.getJSONArray("items");
 
             if (array.length() > 0) {
-                for(int i =0;i<array.length();i++){
+                for (int i = 0; i < array.length(); i++) {
 
-                JSONObject item = array.getJSONObject(i);
+                    JSONObject item = array.getJSONObject(i);
 
-                JSONObject volumeInfo = item.getJSONObject("volumeInfo");
-                String title = volumeInfo.getString("title");
+                    JSONObject volumeInfo = item.getJSONObject("volumeInfo");
+                    String title = volumeInfo.getString("title");
 
-                JSONArray authors = volumeInfo.getJSONArray("authors");
-                String author = authors.getString(0);
+                    JSONArray authors = volumeInfo.getJSONArray("authors");
+
+                    String author = "";
+
+                    if (volumeInfo.has("authors")) {
+                        author = volumeInfo.getString("authors");
+                    } else {
+                        author = "no author/s listed";
+                    }
+                    authors.getString(0);
 
                     String publisher = " ";
                     if (volumeInfo.has("publisher")) {
@@ -119,20 +129,20 @@ public class QueryUtils {
                         publisher = "no publisher listed";
                     }
 
-                    String description ="";
-                    if(volumeInfo.has("description")){
+                    String description = "";
+                    if (volumeInfo.has("description")) {
                         description = volumeInfo.getString("description");
-                    }else {
+                    } else {
                         description = "no book description provided";
                     }
 
-                JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
-                String imageLink = imageLinks.getString("smallThumbnail");
+                    JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
+                    String imageLink = imageLinks.getString("smallThumbnail");
 
-                arrayListBook.add(new Book (title, author, publisher, description, imageLink));
-            }
+                    arrayListBook.add(new Book(title, author, publisher, description, imageLink));
+                }
 
-            return arrayListBook;
+                return arrayListBook;
             }
 
 
