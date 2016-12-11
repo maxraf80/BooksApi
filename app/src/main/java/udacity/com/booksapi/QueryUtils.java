@@ -110,17 +110,18 @@ public class QueryUtils {
 
                     JSONObject volumeInfo = item.getJSONObject("volumeInfo");
                     String title = volumeInfo.getString("title");
-
-                    JSONArray authors = volumeInfo.getJSONArray("authors");
-
                     String author = "";
 
+
+
                     if (volumeInfo.has("authors")) {
+                        JSONArray authors = volumeInfo.getJSONArray("authors");
                         author = volumeInfo.getString("authors");
+                        authors.getString(0);
                     } else {
                         author = "no author/s listed";
                     }
-                    authors.getString(0);
+
 
                     String publisher = " ";
                     if (volumeInfo.has("publisher")) {
