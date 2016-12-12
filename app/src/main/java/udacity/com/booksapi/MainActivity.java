@@ -31,8 +31,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ListView listView = (ListView) findViewById(R.id.list);
+        listView.setEmptyView(findViewById(R.id.empty_list_view));
         adapter = new BookAdapter(this, new ArrayList<Book>());
         listView.setAdapter(adapter);
+
+
         topic = (TextView) findViewById(R.id.editText);
         checkButton = (Button) findViewById(R.id.search_button);
         checkButton.setOnClickListener(new View.OnClickListener() {
@@ -70,13 +73,13 @@ public class MainActivity extends AppCompatActivity {
 
         protected ArrayList<Book> doInBackground(String... urls) {
             if (urls.length < 1 || urls[0] == null) {
-                Log.e(LOG_TAG, "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+                Log.e(LOG_TAG, "YYYY");
                 return null;
 
             }
 
             result = QueryUtils.fetchBookData(urls[0]);
-            Log.e(LOG_TAG, "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+            Log.e(LOG_TAG, "YYYY");
             return result;
         }
 
@@ -84,12 +87,12 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Book> result) {
 
             if (result == null) {
-                Log.e(LOG_TAG, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                Log.e(LOG_TAG, "XXXXX");
 
                 return;
             }
             adapter.addAll(result);
-            Log.e(LOG_TAG, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            Log.e(LOG_TAG, "XXXXX");
         }
     }
 }
